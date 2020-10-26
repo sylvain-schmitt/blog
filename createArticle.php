@@ -83,7 +83,7 @@ if($_POST){
                         <select class="form-control" name="category">
                             <option type="text" value="<?= $category['category_id']?>">Choisir une Catégorie</option>
                             <?php foreach($categorys as $category ): ?>
-                            <option ><?= $category['id'] ?> : <?= $category['category_name'] ?></option>
+                            <option value="<?= $category['id'] ?>"><?= $category['category_name'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
