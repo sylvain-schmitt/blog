@@ -2,16 +2,12 @@
 // On démarre une session
 session_start();
 
+if(isset($_GET['category_id']) && !empty($_GET['category_id'])){
+
 // On inclut la connexion à la base
 require_once('connect.php');
-require('function.php');
 
-$categorys = selectCategory();
-
-
-// selection de toutes les colonnes de la table category et articles avec jointure de category.id 
-$sql = "SELECT * FROM category, articles  WHERE articles.category_id = category.id ORDER BY created_at DESC";
-// On prépare la requête
+$sql = "SELECT * FROM  articles WHERE category_id  = $_GET[category_id] ";
 $query = $db->prepare($sql);
 
 // On exécute la requête
@@ -20,8 +16,7 @@ $query->execute();
 // On stocke le résultat dans un tableau associatif
 $articles = $query->fetchAll(PDO::FETCH_ASSOC);
 
-
-
+}
 
 
 require_once('close.php');
@@ -62,9 +57,6 @@ require_once('close.php');
                         <th>title</th>
                         <th>content</th>
                         <th>date de création</th>
-                        <th>date de modif</th>
-                        <th>catégorie</th>
-                        <th>action</th>
                     </thead>
                     <tbody>
                         <?php
@@ -76,28 +68,13 @@ require_once('close.php');
                                 <td><?= $article['title'] ?></td>
                                 <td><?= $article['content'] ?></td>
                                 <td><?= $article['created_at'] ?></td>
-                                <td><?= $article['updated_at'] ?></td>
-                                <td><?= $article['category_name'] ?></td>
-                                <td> <a href="detailArticle.php?slug=<?= $article['slug'] ?>">Voir</a> <a href="updateArticle.php?id=<?= $article['id'] ?>">Modifier</a> <a href="deleteArticle.php?id=<?= $article['id'] ?>">Supprimer</a></td>
                             </tr>
                         <?php
                         }
                         ?>
                     </tbody>
                 </table>
-                <a href="createArticle.php" class="btn btn-primary">Ajouter un article</a>
-                <a href="listcategory.php" class="btn btn-primary">Voir les catégories</a>
-                <form action="articlesByCat.php" method="GET">
-                    <div class="form-group">
-                        <select class="form-control" name="category_id">
-                            <option type="text" value="<?= $category['category_id']?>">Voir les articles par Catégorie</option>
-                            <?php foreach($categorys as $category ): ?>
-                            <option value ="<?= $category['id'] ?>"><?= $category['category_name']?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary">Envoyer</button>
-                </form>
+                <a href="index.php" class="btn btn-primary">Retour</a>
             </section>
         </div>
     </main>

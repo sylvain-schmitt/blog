@@ -80,7 +80,7 @@ if($_POST){
                         <textarea name="content" class="form-control" aria-label="With textarea"></textarea>
                     </div><br><hr>
                     <div class="form-group">
-                        <select class="form-control" name="category" required>
+                        <select class="form-control" name="category">
                             <option type="text" value="<?= $category['category_id']?>">Choisir une Catégorie</option>
                             <?php foreach($categorys as $category ): ?>
                             <option ><?= $category['id'] ?> : <?= $category['category_name'] ?></option>

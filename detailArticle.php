@@ -3,21 +3,22 @@
 session_start();
 
 
-// Est-ce que l'id existe et n'est pas vide dans l'URL
-if(isset($_GET['id']) && !empty($_GET['id'])){
+
+// Est-ce que le existe et n'est pas vide dans l'URL
+if(isset($_GET['slug']) && !empty($_GET['slug'])){
     require_once('connect.php');
 
 
-    // On nettoie l'id envoyé
-    $id = strip_tags($_GET['id']);
+    // On nettoie le slug envoyé
+    $slug = strip_tags($_GET['slug']);
 
-    $sql = "SELECT * FROM  articles  WHERE  id = :id ";
+    $sql = "SELECT * FROM  articles  WHERE  slug = :slug ";
 
     // On prépare la requête
     $query = $db->prepare($sql);
 
     // On "accroche" les paramètre (id)
-    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    $query->bindValue(':slug', $slug, PDO::PARAM_STR);
 
     // On exécute la requête
     $query->execute();
@@ -34,7 +35,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 
     // On vérifie si l'article existe
     if(!$article){
-        $_SESSION['erreur'] = "Cet id n'existe pas";
+        $_SESSION['erreur'] = "Cet article n'existe pas";
         header('Location: index.php');
     }
 }else{
@@ -64,12 +65,12 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
                 <a href="updateArticle.php?id=<?= $article['id'] ?>" class="btn btn-primary">Modifier</a>
             </div>
             <div class="card-footer text-muted">
-            <p>écrit le <?=$article['created_at'] ?></p>
+            <p>Publié le <?=$article['created_at']?></p>
             </div>
             </div>
     </main>
     <div class="container text-center">
-            <img src="https://picsum.photos/600" class="img-fluid" alt="Responsive image">
+            <img src="https://picsum.photos/500/300" class="img-fluid" alt="Responsive image">
             </div>
 
 </body>
