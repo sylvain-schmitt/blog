@@ -7,7 +7,7 @@ if(isset($_GET['category_id']) && !empty($_GET['category_id'])){
 // On inclut la connexion à la base
 require_once('connect.php');
 
-$sql = "SELECT * FROM  articles WHERE category_id  = $_GET[category_id] ";
+$sql = "SELECT * FROM  articles WHERE category_id  = $_GET[category_id] ORDER BY created_at DESC ";
 $query = $db->prepare($sql);
 
 // On exécute la requête
